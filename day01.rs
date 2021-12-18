@@ -2,7 +2,6 @@
 use std::convert::TryInto;
 use std::iter::FromIterator;
 
-mod helpers;
 mod day01_input;
 
 const TEST_INPUT: [i32; 10] = [
