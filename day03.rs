@@ -1,3 +1,5 @@
+#![allow(unused_imports)]
+
 use std::iter::FromIterator;
 use std::iter::IntoIterator;
 use std::str::FromStr;
@@ -51,8 +53,7 @@ fn main() {
 fn do_part1(input: Input) -> i32 {
     let cnt: i32 = input.diag.len().try_into().unwrap();
     let width: i32 = input.width.try_into().unwrap();
-    let mut sums: Vec<i32> = Vec::with_capacity(input.width);
-    sums.resize(input.width, 0);
+    let mut sums = vec![0; input.width];
 
     for msg in input.diag.into_iter() {
         msg.chars().enumerate().for_each(|(i,c)| {
@@ -72,30 +73,51 @@ fn do_part1(input: Input) -> i32 {
     gamma * epsilon
 }
 
-fn do_part2(actions: Input) -> i32 {
-    0
+fn do_part2(input: Input) -> i32 {
+    let mut o2_list: Vec<String> = input.diag.clone();
+    for i in 0..input.width {
+        if o2_list.len() > 1 {
+            o2_list = reduce_list(o2_list, i, true);
+        } else { break; }
+    }
+    
+    let mut co2_list = input.diag.clone();
+    for i in 0..input.width {
+        if co2_list.len() > 1 {
+            co2_list = reduce_list(co2_list, i, false);
+        } else { break; }
+    }
+
+    let o2_gen = i32::from_str_radix(o2_list[0].as_str(), 2).unwrap();
+    let co2_scrub = i32::from_str_radix(co2_list[0].as_str(), 2).unwrap();
+
+    o2_gen * co2_scrub
 }
 
-fn reduce_list<'a, I>(val: I, bit_pos: usize, take_larger: bool) -> Vec<String>
-where I: IntoIterator<Item=&'a String> {
-    let limit = val.len().try_into::<i32>.unwrap() / 2;
-    let bitSum = 
-        val.into_iter()
-            .map(|x| x.get(bit_pos).unwrap())
+fn reduce_list(val: Vec<String>, bit_pos: usize, take_larger: bool) -> Vec<String> {
+    let n = val.len() as i32;
+    let limit = (n + 1) / 2;    // Do an integer-ceiling operation
+    let bit_sum = 
+        val.iter()
+            .map(|x| x.chars().nth(bit_pos).unwrap())
             .fold(0, |acc,x| {
                 if x == '1' { acc + 1 }
                 else { acc }
             });
 
-    if (bitSum >= limit && take_targer) || (bitSum < limit && !take_larger) {
+    // bit_sum will be greator than limit if it is mostly 1s.
+    // it will be less than limit if it is mostly 0s.
+    if (bit_sum >= limit && take_larger) || (bit_sum < limit && !take_larger) {
         Vec::from_iter(
             val
-            .into_iter()
-            .filter(|x| x.get(bit_pos).unwrap() == '1'))
+            .iter()
+            .filter(|x| x.chars().nth(bit_pos).unwrap() == '1')
+            .map(|x| x.clone()))
     } else {
         Vec::from_iter(
             val
             .into_iter()
-            .filter(|x| x.get(bit_pos).unwrap() == '0'))
+            .filter(|x| x.chars().nth(bit_pos).unwrap() == '0')
+            .map(|x| x.clone()))
     }
 }

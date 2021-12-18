@@ -14,7 +14,7 @@ pub const TEST_INPUT: [&str; 12] = [
 ];
 
 pub const TEST_RESULT_PART1: i32 = 198;
-pub const TEST_RESULT_PART2: i32 = 0;
+pub const TEST_RESULT_PART2: i32 = 230;
 
 pub const PUZZLE_INPUT: [&str; 1000] = [
     "011111111101",
