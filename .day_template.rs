@@ -8,10 +8,12 @@ use std::convert::TryInto;
 
 mod day{{day}}_input;
 
+#[derive(Debug)]
+struct InputError { }
 struct Input { }
 
 impl FromStr for Input {
-    type Err;
+    type Err = InputError;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         
 
@@ -28,13 +30,13 @@ fn main() {
     println!("======");
     println!();
 
-    let puzzle_test_out1 = do_part1(make_input(day{{day}}_input::TEST_INPUT));
+    let puzzle_test_out1 = do_part1(day{{day}}_input::TEST_INPUT.parse::<Input>().unwrap());
     println!("Test output: {} (expected {})", puzzle_test_out1, day{{day}}_input::TEST_RESULT_PART1);
     assert_eq!(day{{day}}_input::TEST_RESULT_PART1, puzzle_test_out1);
 
     println!();
     println!("Running puzzle input...");
-    let puzzle_out1 = do_part1(make_input(day{{day}}_input::PUZZLE_INPUT));
+    let puzzle_out1 = do_part1(day{{day}}_input::PUZZLE_INPUT.parse::<Input>().unwrap());
     println!("Puzzle result: {}", puzzle_out1);
     println!();
 
@@ -42,13 +44,13 @@ fn main() {
     println!("======");
     println!();
 
-    let test_out2 = do_part2(make_input(day{{day}}_input::TEST_INPUT));
+    let test_out2 = do_part2(day{{day}}_input::TEST_INPUT.parse::<Input>().unwrap());
     println!("Test output: {} (expected {})", test_out2, day{{day}}_input::TEST_RESULT_PART2);
     assert_eq!(day{{day}}_input::TEST_RESULT_PART2, test_out2);
 
     println!();
     println!("Running puzzle input...");
-    let puzzle_out2 = do_part2(make_input(day{{day}}_input::PUZZLE_INPUT));
+    let puzzle_out2 = do_part2(day{{day}}_input::PUZZLE_INPUT.parse::<Input>().unwrap());
     println!("Puzzle result: {}", puzzle_out2);
     println!();
 }
