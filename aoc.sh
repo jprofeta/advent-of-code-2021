@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Advent of Code helper commands
+
+ACTION="$1"
+DAY="$2"
+
+TEMPLATE=".day_template.rs"
+INPUT_TEMPLATE=".day_input_template.rs"
+
+if [[ "$ACTION" == "create" ]]; then
+	TOPIC="$3"
+	if [[ -z "$TOPIC" ]]; then
+		echo "No topic provided."
+		exit 1
+	fi
+	if [ -f "day${DAY}.rs" ]; then
+		echo "Day already exists."
+		exit 1
+	else
+		cp $TEMPLATE "day${DAY}.rs"
+		cp $INPUT_TEMPLATE "day${DAY}_input.rs"
+
+		sed -i -s -r "s/\\{\\{day\\}\\}/${DAY}/" "day${DAY}.rs" "day${DAY}_input.rs"
+		sed -i -s -r "s/\\{\\{topic\\}\\}/${TOPIC}/" "day${DAY}.rs" "day${DAY}_input.rs"
+
+		echo "Created files for day ${DAY} - ${TOPIC}."
+	fi
+
+elif [[ "$ACTION" == "run" ]]; then
+	rustc "day${DAY}.rs" -o "./out/day${DAY}" && ./out/day${DAY}
+else
+	echo "Unknown action ('$ACTION')."
+	exit 1
+fi

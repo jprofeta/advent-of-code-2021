@@ -11,6 +11,7 @@ mod day{{day}}_input;
 
 #[derive(Debug)]
 struct InputError { }
+#[derive(Debug)]
 struct Input { }
 
 impl FromStr for Input {
