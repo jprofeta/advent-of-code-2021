@@ -1,5 +1,6 @@
 #![allow(unused_imports)]
 #![allow(unused_variables)]
+#![allow(dead_code)]
 
 use std::iter::FromIterator;
 use std::iter::IntoIterator;
@@ -22,7 +23,7 @@ impl FromStr for Input {
 }
 
 fn main() {
-    println!("Advent of Code");
+    println!("Advent of Code 2021");
     println!("Day {{day}} - {{topic}}");
     println!();
 
