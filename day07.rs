@@ -12,14 +12,15 @@ mod day07_input;
 #[derive(Debug)]
 struct InputError { }
 #[derive(Debug)]
-struct Input { }
+struct Input { crabs: Vec<i32> }
 
 impl FromStr for Input {
     type Err = InputError;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        
+        let s = String::from(s);
+        let crabs: Vec<i32> = s.split(',').map(|x| x.trim().parse::<i32>().unwrap()).collect();
 
-        Ok(Input { })
+        Ok(Input { crabs: crabs })
     }
 }
 
@@ -58,9 +59,25 @@ fn main() {
 }
 
 fn do_part1(input: Input) -> i32 {
-    0
+    let mut crabs = input.crabs.clone();
+
+    // Find the median to get the most "fuel-efficient" location.
+    let n = crabs.len();
+    crabs.sort();
+    let h = crabs[n/2];
+
+    input.crabs.iter().map(|x| (h-x).abs()).sum::<i32>()
 }
 
 fn do_part2(input: Input) -> i32 {
-    0
+    // Just iterate over everything to find the smallest fuel value.
+    // It should be very near the arithmetic mean.
+    let max = *input.crabs.iter().max().unwrap() as usize;
+    let mut fuel_cost = vec![0; max + 1];
+    for h in 0..=max {
+        fuel_cost[h] = input.crabs.iter().map(|x| ((h as i32)-x).abs()).map(|x| x*(x+1)/2).sum::<i32>()
+    }
+    
+    let (h,c) = fuel_cost.iter().enumerate().min_by_key(|x| x.1).unwrap();
+    *c
 }
