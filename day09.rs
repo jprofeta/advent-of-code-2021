@@ -6,20 +6,26 @@ use std::iter::FromIterator;
 use std::iter::IntoIterator;
 use std::str::FromStr;
 use std::convert::TryInto;
+use std::cmp;
 
 mod day09_input;
 
 #[derive(Debug)]
 struct InputError { }
 #[derive(Debug)]
-struct Input { }
+struct Input { heatmap: Vec<Vec<i32>> }
 
 impl FromStr for Input {
-    type Err = InputError;
+    type Err = std::num::ParseIntError;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        
+        let mut heatmap: Vec<Vec<i32>> = Vec::new();
+        let s = String::from(s);
+        for l in s.lines() {
+            let slice: Vec<i32> = l.trim().chars().map(|c| c.to_digit(10).unwrap() as i32).collect();
+            heatmap.push(slice);
+        }
 
-        Ok(Input { })
+        Ok(Input { heatmap: heatmap })
     }
 }
 
@@ -58,9 +64,52 @@ fn main() {
 }
 
 fn do_part1(input: Input) -> i32 {
-    0
+    let map = &input.heatmap;
+    let m = map.len();
+
+    let mut map_lows: Vec<i32> = Vec::new();
+
+    for j in 0..m {
+        let row = &input.heatmap[j];
+        let n = row.len();
+
+        for i in 0..n {
+            let h = map[j][i];
+            if i > 0 {
+                let x = map[j][i-1];
+                if h >= x { continue; }
+            }
+            if i < n-1 {
+                let x = map[j][i+1];
+                if h >= x { continue; }
+            }
+            if j > 0 {
+                let x = map[j-1][i];
+                if h >= x { continue; }
+            }
+            if j < m-1 {
+                let x = map[j+1][i];
+                if h >= x { continue; }
+            }
+            
+            // If it makes it this far then the value is "low"
+            map_lows.push(h);
+        }
+    }
+    
+    map_lows.iter().fold(0, |acc,x| acc + x + 1)
 }
 
 fn do_part2(input: Input) -> i32 {
     0
+}
+
+fn get_map_entry(map: &Vec<Vec<i32>>, i: isize, j: isize) -> i32 {
+    let n = map[0].len() as isize;
+    let m = map.len() as isize;
+
+    let i = cmp::max(0, cmp::min(n-1, i)) as usize;
+    let j = cmp::max(0, cmp::min(m-1, j)) as usize;
+
+    map[j][i]
 }
