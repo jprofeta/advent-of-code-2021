@@ -64,13 +64,26 @@ fn main() {
 }
 
 fn do_part1(input: Input) -> i32 {
-    let map = &input.heatmap;
+    let map_lows = get_local_mins(&input.heatmap);
+    map_lows.iter().fold(0, |acc,x| acc + x.h + 1)
+}
+
+fn do_part2(input: Input) -> i32 {
+    let map_lows = get_local_mins(&input.heatmap);
+    let mut basin_sizes: Vec<i32> = Vec::new();
+
+    basin_sizes.sort();
+    basin_sizes.iter().take(3).sum::<i32>()
+}
+
+struct LocalMin { x: usize, y: usize, h: i32 }
+fn get_local_mins(map: &Vec<Vec<i32>>) -> Vec<LocalMin> {
     let m = map.len();
 
-    let mut map_lows: Vec<i32> = Vec::new();
+    let mut map_lows: Vec<LocalMin> = Vec::new();
 
     for j in 0..m {
-        let row = &input.heatmap[j];
+        let row = &map[j];
         let n = row.len();
 
         for i in 0..n {
@@ -93,23 +106,9 @@ fn do_part1(input: Input) -> i32 {
             }
             
             // If it makes it this far then the value is "low"
-            map_lows.push(h);
+            map_lows.push(LocalMin{x: i, y: j, h: h});
         }
     }
-    
-    map_lows.iter().fold(0, |acc,x| acc + x + 1)
-}
 
-fn do_part2(input: Input) -> i32 {
-    0
-}
-
-fn get_map_entry(map: &Vec<Vec<i32>>, i: isize, j: isize) -> i32 {
-    let n = map[0].len() as isize;
-    let m = map.len() as isize;
-
-    let i = cmp::max(0, cmp::min(n-1, i)) as usize;
-    let j = cmp::max(0, cmp::min(m-1, j)) as usize;
-
-    map[j][i]
+    map_lows
 }
