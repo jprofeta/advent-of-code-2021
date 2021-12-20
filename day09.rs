@@ -69,11 +69,24 @@ fn do_part1(input: Input) -> i32 {
 }
 
 fn do_part2(input: Input) -> i32 {
-    let map_lows = get_local_mins(&input.heatmap);
+    let map = &input.heatmap;
+    let map_lows = get_local_mins(map);
     let mut basin_sizes: Vec<i32> = Vec::new();
 
+    for low in map_lows {
+        let mut points_in_basin: Vec<(usize, usize)> = vec![(low.x, low.y)];
+        let mut k: usize = 0;
+
+        while k < points_in_basin.len() {
+            add_basin_adjacent(map, points_in_basin[k], &mut points_in_basin);
+            k += 1;
+        }
+
+        basin_sizes.push(points_in_basin.len() as i32);
+    }
+
     basin_sizes.sort();
-    basin_sizes.iter().take(3).sum::<i32>()
+    basin_sizes.iter().rev().take(3).fold(1, |acc,x| acc*x)
 }
 
 struct LocalMin { x: usize, y: usize, h: i32 }
@@ -111,4 +124,17 @@ fn get_local_mins(map: &Vec<Vec<i32>>) -> Vec<LocalMin> {
     }
 
     map_lows
+}
+
+fn add_basin_adjacent(map: &Vec<Vec<i32>>, coords: (usize, usize), basin_points: &mut Vec<(usize, usize)>) {
+    let m = map.len();
+    let n = map[0].len();
+
+    let (i,j) = coords;
+    
+    if i > 0 && map[j][i-1] < 9 && !basin_points.contains(&(i-1,j)) { basin_points.push((i-1, j)); }
+    if j > 0 && map[j-1][i] < 9 && !basin_points.contains(&(i,j-1)) { basin_points.push((i, j-1)); }
+
+    if i < n - 1 && map[j][i+1] < 9 && !basin_points.contains(&(i+1,j)) { basin_points.push((i+1, j)); }
+    if j < m - 1 && map[j+1][i] < 9 && !basin_points.contains(&(i,j+1)) { basin_points.push((i, j+1)); }
 }
