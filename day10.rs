@@ -6,20 +6,27 @@ use std::iter::FromIterator;
 use std::iter::IntoIterator;
 use std::str::FromStr;
 use std::convert::TryInto;
+use std::collections::HashMap;
 
 mod day10_input;
+
+const SCORES: [(char,i32); 4] = [
+    (')', 3),
+    (']', 57),
+    ('}', 1197),
+    ('>', 25137),
+];
 
 #[derive(Debug)]
 struct InputError { }
 #[derive(Debug)]
-struct Input { }
+struct Input { lines: Vec<String> }
 
 impl FromStr for Input {
     type Err = InputError;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        
-
-        Ok(Input { })
+        let lines: Vec<String> = String::from(s).lines().map(|x| String::from(x)).collect();
+        Ok(Input { lines: lines })
     }
 }
 
@@ -63,4 +70,28 @@ fn do_part1(input: Input) -> i32 {
 
 fn do_part2(input: Input) -> i32 {
     0
+}
+
+fn is_subsystem_incomplete(line: &String) -> bool {
+    let cs: Vec<char> = line.chars().collect();
+
+    for i in 0..cs.len() {
+        let chunk_end = match cs[i] {
+            '(' => Some(')'),
+            '[' => Some(']'),
+            '{' => Some('}'),
+            '<' => Some('>'),
+            _ => None
+        }.unwrap();
+        let mut depth = 1;
+        for j = (i+1)..cs.len() {
+            if cs[j] == cs[i] {
+                depth += 1;
+            } else if cs[j] == chunk_end {
+                depth -= 1;
+            }
+        }
+    }
+    
+    true
 }
