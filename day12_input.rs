@@ -1,26 +1,39 @@
+// pub const TEST_INPUT: &str = "\
+// fs-end
+// he-DX
+// fs-he
+// start-DX
+// pj-DX
+// end-zg
+// zg-sl
+// zg-pj
+// pj-he
+// RW-he
+// fs-DX
+// pj-RW
+// zg-RW
+// start-pj
+// he-WI
+// zg-he
+// pj-fs
+// start-RW
+// ";
+
+// pub const TEST_RESULT_PART1: i32 = 226;
+// pub const TEST_RESULT_PART2: i32 = 3509;
+
 pub const TEST_INPUT: &str = "\
-fs-end
-he-DX
-fs-he
-start-DX
-pj-DX
-end-zg
-zg-sl
-zg-pj
-pj-he
-RW-he
-fs-DX
-pj-RW
-zg-RW
-start-pj
-he-WI
-zg-he
-pj-fs
-start-RW
+start-A
+start-b
+A-c
+A-b
+b-d
+A-end
+b-end
 ";
 
-pub const TEST_RESULT_PART1: i32 = 226;
-pub const TEST_RESULT_PART2: i32 = 0;
+pub const TEST_RESULT_PART1: i32 = 10;
+pub const TEST_RESULT_PART2: i32 = 36;
 
 pub const PUZZLE_INPUT: &str = "\
 start-qs
