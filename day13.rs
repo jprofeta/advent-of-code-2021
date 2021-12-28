@@ -7,13 +7,21 @@ use std::iter::IntoIterator;
 use std::str::FromStr;
 use std::convert::TryInto;
 
+use ndarray::arr2;
+
 mod day13_input;
 mod dbgprint;
 
 #[derive(Debug)]
+enum FoldDirection {
+    Horizontal,
+    Vertical
+}
+
+#[derive(Debug)]
 struct InputError { }
 #[derive(Debug)]
-struct Input { }
+struct Input { dots: Vec<(i32, i32)>, folds: Vec<(FoldDirection, i32)> }
 
 impl FromStr for Input {
     type Err = InputError;

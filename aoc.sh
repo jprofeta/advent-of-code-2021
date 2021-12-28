@@ -8,6 +8,8 @@ DAY="$2"
 TEMPLATE=".day_template.rs"
 INPUT_TEMPLATE=".day_input_template.rs"
 
+EXTERNS="--extern ndarray=deps/libndarray-4276025192ebc488.rlib"
+
 if [[ "$ACTION" == "create" ]]; then
 	TOPIC="$3"
 	if [[ -z "$TOPIC" ]]; then
@@ -28,7 +30,7 @@ if [[ "$ACTION" == "create" ]]; then
 	fi
 
 elif [[ "$ACTION" == "run" ]]; then
-	rustc "day${DAY}.rs" -o "./out/day${DAY}" && ./out/day${DAY}
+	rustc --edition=2018 -L ./deps $EXTERNS "day${DAY}.rs" -o "./out/day${DAY}" && ./out/day${DAY}
 else
 	echo "Unknown action ('$ACTION')."
 	exit 1
