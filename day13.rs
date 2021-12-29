@@ -7,12 +7,14 @@ use std::iter::IntoIterator;
 use std::str::FromStr;
 use std::convert::TryInto;
 
+use ndarray::Array;
+use ndarray::Array2;
 use ndarray::arr2;
 
 mod day13_input;
 mod dbgprint;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Eq, PartialEq)]
 enum FoldDirection {
     Horizontal,
     Vertical
@@ -62,7 +64,7 @@ impl FromStr for Input {
 }
 
 fn main() {
-    dbgprint::enable();
+    //dbgprint::enable();
 
     println!("Advent of Code 2021");
     println!("Day 13 - Transparent Origami");
@@ -97,10 +99,87 @@ fn main() {
     println!();
 }
 
+fn make_paper(input: &Input) -> Array2<i32> {
+    let width = input.dots.iter().map(|(x,y)| *x).max().unwrap();
+    let height = input.dots.iter().map(|(x,y)| *y).max().unwrap();
+    let mut paper: Array2<i32> = Array::zeros((width + 1, height + 1));
+
+    for d in input.dots.iter() {
+        *(paper.get_mut((d.0, d.1)).unwrap()) = 1;
+    }
+
+    paper.clone()
+}
+
+fn fold_paper(arr: &Array2<i32>, fold: (FoldDirection, usize)) -> Array2<i32> {
+    let shape = arr.shape();
+    let (w, h) = match fold.0 {
+        FoldDirection::Horizontal => (shape[0], fold.1),
+        FoldDirection::Vertical => (fold.1, shape[1])
+    };
+
+    let mut folded: Array2<i32> = Array::zeros((w, h));
+    for j in 0..h {
+        for i in 0..w {
+            let idx = (i,j);
+            let idx_fold = match fold.0 {
+                FoldDirection::Horizontal => (i, 2 * fold.1 - j),
+                FoldDirection::Vertical => (2 * fold.1 - i, j)
+            };
+            *folded.get_mut(idx).unwrap() = *arr.get(idx).unwrap() | *arr.get(idx_fold).unwrap_or(&0);
+        }
+    }
+
+    folded
+}
+
+fn print_paper_fold(arr: &Array2<i32>, fold: &(FoldDirection, usize)) {
+    let shape = arr.shape();
+    for j in 0..shape[1] {
+        for i in 0..shape[0] {
+            let is_dot = arr.get((i,j)).unwrap() > &0;
+
+            if i == fold.1 && fold.0 == FoldDirection::Vertical {
+                if is_dot { dbgprint!("X"); } else { dbgprint!("|"); }
+            } else if j == fold.1 && fold.0 == FoldDirection::Horizontal {
+                if is_dot { dbgprint!("X"); } else { dbgprint!("_"); }
+            } else {
+                if is_dot { dbgprint!("#"); }
+                else { dbgprint!("."); }
+            }
+        }
+        dbgprintln!();
+    }
+}
+
+fn print_paper(arr: &Array2<i32>) {
+    let shape = arr.shape();
+    for j in 0..shape[1] {
+        for i in 0..shape[0] {
+            if arr.get((i,j)).unwrap() > &0 { print!("#"); }
+            else { print!("."); }
+        }
+        println!();
+    }
+}
+
 fn do_part1(input: Input) -> i32 {
-    0
+    let paper = make_paper(&input);
+    let folded = fold_paper(&paper, input.folds[0].clone());
+    folded.iter().filter(|x| **x > 0).count() as i32
 }
 
 fn do_part2(input: Input) -> i32 {
+    let mut paper = make_paper(&input);
+    for fold in input.folds.iter() {
+        dbgprintln!("{:?}", fold);
+        if paper.shape().iter().max().unwrap() > &0 {
+            print_paper_fold(&paper, &fold);
+            dbgprintln!();
+        }
+
+        paper = fold_paper(&paper, fold.clone());
+    }
+    print_paper(&paper);
     0
 }

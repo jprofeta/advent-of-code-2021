@@ -13,6 +13,12 @@ macro_rules! dbgprintln {
     ($($arg:tt)*) => (if dbgprint::is_enabled() { println!($($arg)*) });
 }
 
+#[macro_export]
+macro_rules! dbgprint {
+    () =>(if dbgprint::is_enabled() { print!() });
+    ($($arg:tt)*) => (if dbgprint::is_enabled() { print!($($arg)*) });
+}
+
 pub fn is_enabled() -> bool {
     DEBUG_PRINT_ENABLE.load(Ordering::Relaxed)
 }
