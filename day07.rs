@@ -7,7 +7,7 @@ use std::iter::IntoIterator;
 use std::str::FromStr;
 use std::convert::TryInto;
 
-mod day07_input;
+use crate::day07_input;
 
 #[derive(Debug)]
 struct InputError { }
@@ -24,7 +24,7 @@ impl FromStr for Input {
     }
 }
 
-fn main() {
+pub fn main() {
     println!("Advent of Code 2021");
     println!("Day 07 - The Treachery of Whales");
     println!();

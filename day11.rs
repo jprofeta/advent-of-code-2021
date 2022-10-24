@@ -7,7 +7,7 @@ use std::iter::IntoIterator;
 use std::str::FromStr;
 use std::convert::TryInto;
 
-mod day11_input;
+use crate::day11_input;
 
 const STEPS_PART1: usize = 100;
 
@@ -103,7 +103,7 @@ impl FromStr for Input {
     }
 }
 
-fn main() {
+pub fn main() {
     println!("Advent of Code 2021");
     println!("Day 11 - Dumbo Octopus");
     println!();

@@ -1,0 +1,12 @@
+[package]
+name = "advent_of_code_2021"
+version = "1.0.0"
+edition = "2021"
+include = [ "day*.rs" ]
+
+[[bin]]
+name = "aoc2021"
+path = "main.rs"
+
+[dependencies]
+ndarray = ">=0.15.6"

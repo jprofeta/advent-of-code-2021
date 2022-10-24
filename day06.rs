@@ -7,7 +7,7 @@ use std::iter::IntoIterator;
 use std::str::FromStr;
 use std::convert::TryInto;
 
-mod day06_input;
+use crate::day06_input;
 
 const DAYS_PART1: i32 = 80;
 const DAYS_PART2: i32 = 256;
@@ -28,7 +28,7 @@ impl FromStr for Input {
     }
 }
 
-fn main() {
+pub fn main() {
     println!("Advent of Code 2021");
     println!("Day 06 - Lanternfish");
     println!();

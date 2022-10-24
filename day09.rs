@@ -8,7 +8,7 @@ use std::str::FromStr;
 use std::convert::TryInto;
 use std::cmp;
 
-mod day09_input;
+use crate::day09_input;
 
 #[derive(Debug)]
 struct InputError { }
@@ -29,7 +29,7 @@ impl FromStr for Input {
     }
 }
 
-fn main() {
+pub fn main() {
     println!("Advent of Code 2021");
     println!("Day 09 - Smoke Basin");
     println!();

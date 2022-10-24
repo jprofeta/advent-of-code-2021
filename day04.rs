@@ -7,7 +7,7 @@ use std::iter::IntoIterator;
 use std::str::FromStr;
 use std::convert::TryInto;
 
-mod day04_input;
+use crate::day04_input;
 
 #[derive(Debug)]
 struct BingoBoard([[i32; 5]; 5]);
@@ -63,7 +63,7 @@ impl FromStr for Input {
     }
 }
 
-fn main() {
+pub fn main() {
     println!("Advent of Code 2021");
     println!("Day 04 - Giant Squid");
     println!();

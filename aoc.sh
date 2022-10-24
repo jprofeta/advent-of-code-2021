@@ -30,7 +30,7 @@ if [[ "$ACTION" == "create" ]]; then
 	fi
 
 elif [[ "$ACTION" == "run" ]]; then
-	rustc --edition=2018 -L ./deps $EXTERNS "day${DAY}.rs" -o "./out/day${DAY}" && ./out/day${DAY}
+	cargo build && ./target/debug/aoc2021 ${DAY}
 else
 	echo "Unknown action ('$ACTION')."
 	exit 1

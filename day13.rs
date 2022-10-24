@@ -1,6 +1,3 @@
-#![allow(unused_imports)]
-#![allow(unused_variables)]
-#![allow(dead_code)]
 
 use std::iter::FromIterator;
 use std::iter::IntoIterator;
@@ -11,8 +8,8 @@ use ndarray::Array;
 use ndarray::Array2;
 use ndarray::arr2;
 
-mod day13_input;
-mod dbgprint;
+use crate::day13_input;
+use crate::dbgprint;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 enum FoldDirection {
@@ -63,7 +60,7 @@ impl FromStr for Input {
     }
 }
 
-fn main() {
+pub fn main() {
     //dbgprint::enable();
 
     println!("Advent of Code 2021");

@@ -1,13 +1,9 @@
-#![allow(unused_imports)]
-#![allow(unused_variables)]
-#![allow(dead_code)]
-
 use std::iter::FromIterator;
 use std::iter::IntoIterator;
 use std::str::FromStr;
 use std::convert::TryInto;
 
-mod day{{day}}_input;
+use crate::day{{day}}_input;
 
 #[derive(Debug)]
 struct InputError { }
@@ -23,7 +19,7 @@ impl FromStr for Input {
     }
 }
 
-fn main() {
+pub fn main() {
     println!("Advent of Code 2021");
     println!("Day {{day}} - {{topic}}");
     println!();

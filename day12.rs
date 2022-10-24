@@ -9,8 +9,8 @@ use std::convert::TryInto;
 use std::collections::HashMap;
 use std::cell::RefCell;
 
-mod dbgprint;
-mod day12_input;
+use crate::dbgprint;
+use crate::day12_input;
 
 pub trait IteratorSingle<T> {
     fn single(&mut self) -> Option<T>;
@@ -69,7 +69,7 @@ impl FromStr for Input {
     }
 }
 
-fn main() {
+pub fn main() {
     //dbgprint::enable();
 
     println!("Advent of Code 2021");

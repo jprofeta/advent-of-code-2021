@@ -2,7 +2,7 @@
 use std::convert::TryInto;
 use std::iter::FromIterator;
 
-mod day01_input;
+use crate::day01_input;
 
 const TEST_INPUT: [i32; 10] = [
     199,
@@ -22,7 +22,7 @@ const TEST_RESULT_PART2: i32 = 5;
 struct Input(Vec<i32>);
 
 
-fn main() {
+pub fn main() {
     println!("Advent of Code");
     println!("Day 01 - Sonar Sweep");
     println!();

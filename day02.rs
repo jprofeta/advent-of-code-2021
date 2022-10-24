@@ -1,7 +1,7 @@
 use std::iter::FromIterator;
 use std::str::FromStr;
 
-mod day02_input;
+use crate::day02_input;
 
 enum SubOperation {
     Forward,
@@ -27,7 +27,7 @@ impl FromStr for Action {
     }
 }
 
-fn main() {
+pub fn main() {
     println!("Advent of Code");
     println!("Day 02 - Dive");
     println!();

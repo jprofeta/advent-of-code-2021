@@ -9,7 +9,7 @@ use std::convert::TryInto;
 use std::collections::HashMap;
 use std::cmp;
 
-mod day05_input;
+use crate::day05_input;
 
 #[derive(Debug)]
 #[derive(Clone)]
@@ -53,7 +53,7 @@ impl FromStr for Input {
     }
 }
 
-fn main() {
+pub fn main() {
     println!("Advent of Code 2021");
     println!("Day 05 - Hydrothermal Venture");
     println!();

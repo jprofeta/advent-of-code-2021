@@ -9,7 +9,7 @@ use std::str::FromStr;
 use std::convert::TryInto;
 use std::collections::HashMap;
 
-mod day08_input;
+use crate::day08_input;
 
 const DEBUG_PRINT_ENABLE: bool = false;
 
@@ -61,7 +61,7 @@ impl FromStr for Input {
     }
 }
 
-fn main() {
+pub fn main() {
     println!("Advent of Code 2021");
     println!("Day 08 - Seven Segment Search");
     println!();

@@ -5,7 +5,7 @@ use std::iter::IntoIterator;
 use std::str::FromStr;
 use std::convert::TryInto;
 
-mod day03_input;
+use crate::day03_input;
 
 struct Input { width: usize, diag: Vec<String> }
 
@@ -16,7 +16,7 @@ where I: IntoIterator<Item=&'a str> {
     Input { width: width, diag: strs }
 }
 
-fn main() {
+pub fn main() {
     println!("Advent of Code");
     println!("Day 03 - Binary Diagnostic");
     println!();
