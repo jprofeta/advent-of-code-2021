@@ -19,8 +19,8 @@ CC -> N
 CN -> C
 ";
 
-pub const TEST_RESULT_PART1: i32 = 1588;
-pub const TEST_RESULT_PART2: i32 = 0;
+pub const TEST_RESULT_PART1: i64 = 1588;
+pub const TEST_RESULT_PART2: i64 = 2188189693529;
 
 pub const PUZZLE_INPUT: &str = "\
 CKKOHNSBPCPCHVNKHFFK
